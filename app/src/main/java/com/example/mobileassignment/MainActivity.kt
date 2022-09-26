@@ -8,6 +8,7 @@ import com.example.mobileassignment.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,16 +18,27 @@ class MainActivity : AppCompatActivity() {
             this, R.layout.activity_main)
 
         val signup = binding.tvRegister
+        val username = binding.dataUsername
+        val password = binding.dataPassword
+        val forgetPasswords = binding.tvForgetPassword
+
         signup.setOnClickListener {
-            val myIntent = Intent(
-                this,signUp::class.java )
+            val myIntent = Intent(this,signUp::class.java )
+            //passdata
+            val bundle = Bundle()
+
+            bundle.putString("username", username.text.toString())
+            bundle.putString("password", password.text.toString())
+            myIntent.putExtras(bundle)
+
             startActivity(myIntent)
         }
-        val btnTest = binding.btnTest
-        val tvRegister = binding.tvRegister
-        btnTest.setOnClickListener(){
-            tvRegister.text = "hello"
+        forgetPasswords.setOnClickListener {
+            val myIntent = Intent(this,forgetPassword::class.java )
+            startActivity(myIntent)
         }
+        val btnTest = binding.btnLogin
+
 
 
     }

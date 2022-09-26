@@ -13,20 +13,20 @@
         tools:context=".MainActivity">
 
         <Button
-            android:id="@+id/btnTest"
+            android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="136dp"
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.419"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvRegister"
-            app:layout_constraintVertical_bias="0.972" />
+            app:layout_constraintVertical_bias="0.967" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/dataUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:text="Username :"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/dataUsername"
             app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -71,27 +71,29 @@
             android:id="@+id/tvRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="36dp"
             android:layout_marginEnd="72dp"
-            android:text="TextView"
+            android:text="Register"
             android:textColor="#8A2323"
+            android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+            app:layout_constraintStart_toEndOf="@+id/tvForgetPassword"
+            app:layout_constraintTop_toBottomOf="@+id/dataPassword" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvForgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="52dp"
             android:layout_marginTop="52dp"
-            android:text="TextView"
+            android:text="Forget Password"
+            android:textColor="#8A2323"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/dataPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
@@ -99,6 +101,6 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvPassword"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toBottomOf="@+id/dataUsername" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
