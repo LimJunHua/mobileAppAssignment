@@ -26,7 +26,6 @@ class UserHome : Fragment() {
 
         binding.btnBook.setOnClickListener(){
             val fragment = UserBookingFragment()
-
         }
 
 

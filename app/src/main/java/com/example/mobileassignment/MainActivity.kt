@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
                     if(password.equals(validPassword)){
 
                         val myIntent = Intent(this, UserMainActivity::class.java)
+                        Toast.makeText(applicationContext, "Welcome to HealthCare sdn bhd", Toast.LENGTH_LONG).show()
+
                         startActivity(myIntent)
                     }else{
                         Toast.makeText(applicationContext, "password wrong", Toast.LENGTH_LONG).show()
