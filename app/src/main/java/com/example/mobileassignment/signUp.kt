@@ -1,55 +1,94 @@
 package com.example.mobileassignment
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.mobileassignment.databinding.ActivitySignUpBinding
-import com.google.firebase.database.FirebaseDatabase
-import com.example.mobileassignment.UserHelperClass
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
+
 import com.google.firebase.ktx.Firebase
 
 class signUp : AppCompatActivity() {
     private lateinit var binding : ActivitySignUpBinding
-    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+        //databinding
         val binding: ActivitySignUpBinding = DataBindingUtil.setContentView(
             this, R.layout.activity_sign_up)
-        //receive data
-        database = Firebase.database.reference
-        val btnRegister = binding.btnRegister
-        fun writeNewUser(username: String, name: String,  email: String,ICNumber: String,password: String) {
-            val helperClass = UserHelperClass(username, name,  email, ICNumber, password)
-            database.child("users").setValue(helperClass)
 
-        }
+        //database access
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("users")
+
+        var btnRegister = binding.btnRegister
+
+
           btnRegister.setOnClickListener() {
+            var validation = true
             val bundle = intent.extras
-            val username = binding.signupUsername.toString()
-            val name = binding.signupName.toString()
-            val email = binding.signupEmail.toString()
-            val ICNumber = binding.signupICNumber.toString()
-            val password = binding.signupPassword.toString()
-            val comfirmPassword = binding.signupComfirmPassword.toString()
-            val rootNode = FirebaseDatabase.getInstance();
-            val reference = rootNode.getReference("users");
-            writeNewUser(username, name,  email, ICNumber, password)
+            val username = binding.signupUsername.text.toString()
+            val name = binding.signupName.text.toString()
+              val test = binding.tvName
+            val email = binding.signupEmail.text.toString()
+            val iCNumber = binding.signupICNumber.text.toString()
+            val phoneNumber = binding.signupPhoneNumber.text.toString()
+            val password = binding.signupPassword.text.toString()
+              val test1 = binding.test1.text.toString()
+            val comfirmPassword = binding.signupComfirmPassword.text.toString()
+            val users = user(username , name ,iCNumber, phoneNumber, email, password )
+              myRef.child(name).get()
+                  .addOnSuccessListener { result ->
+                      if (result != null ) {
+                          test.text = result.child("$name").value.toString()
+                      }
+                  }
+              if(username.isEmpty() || name.isEmpty()|| email.isEmpty()|| iCNumber.isEmpty() || phoneNumber.isEmpty() || password.isEmpty() || comfirmPassword.isEmpty() ){
+                  Toast.makeText(applicationContext, "please fill in all the field", Toast.LENGTH_LONG).show()
+              }else if(password.length <9){
+                  Toast.makeText(applicationContext, "Password should be more than 9 ", Toast.LENGTH_LONG).show()
+              }else if (password != comfirmPassword){
+                  Toast.makeText(applicationContext, "Password does not match ", Toast.LENGTH_LONG).show()
+              }
+              else {
 
+                  myRef.child(users.name).setValue(users)
+                      .addOnSuccessListener {
+                          Toast.makeText(applicationContext, "Add successful", Toast.LENGTH_LONG)
+                              .show()
+                      }
+                      .addOnFailureListener {
+                          Toast.makeText(applicationContext, "Add failed", Toast.LENGTH_LONG).show()
+                      }
+              }
 
-
-
-            }
-        //Register Button method end
-    }//onCreate Method End
-
-        //if (bundle != null){
-          //  tv1.text = " ${bundle.getString("username")}"
-           // tv2.text = "${bundle.getString("password")}"
-
-        //}
+          }
 
     }
+
+        // writeNewUser(username, name,  email, ICNumber, password)
+
+
+
+
+    //if (bundle != null){
+    //  tv1.text = " ${bundle.getString("username")}"
+    // tv2.text = "${bundle.getString("password")}"
+
+    //}
+        //Register Button method end
+}
+
+
+
+
