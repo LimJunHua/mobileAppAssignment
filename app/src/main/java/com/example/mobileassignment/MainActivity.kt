@@ -2,6 +2,7 @@ package com.example.mobileassignment
 
 import android.content.Intent
 import android.os.Bundle
+
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 class MainActivity : AppCompatActivity() {
     private lateinit var databases: DatabaseReference
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                 if (it.exists()) {
                     var validPassword = it.child("password").value.toString()
                     if(password.equals(validPassword)){
+
                         val myIntent = Intent(this, UserMainActivity::class.java)
                         startActivity(myIntent)
                     }else{
