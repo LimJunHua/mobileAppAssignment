@@ -29,7 +29,7 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="monospace"
-                    android:text="@string/book_a_consultation"
+                    android:text="Book an Appointment"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -55,12 +55,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
                     android:background="#F3EBEB"
-                    android:contentDescription="@string/app_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.412"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView8"
-                    tools:ignore="DuplicateSpeakableTextCheck" />
+                    tools:ignore="DuplicateSpeakableTextCheck,SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textView9"
@@ -79,23 +78,10 @@
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="44dp"
+                    android:layout_marginTop="27dp"
                     android:fontFamily="monospace"
                     android:text="@string/choose_a_date_time"
-                    android:textColor="#795548"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="monospace"
-                    android:text="@string/state_your_condition"
                     android:textColor="#795548"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,36 +95,26 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="33dp"
                     android:background="#F3EBEB"
-                    android:contentDescription="@string/app_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.055"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView9"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-                <Spinner
-                    android:id="@+id/spinTime"
-                    android:layout_width="302dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="50dp"
-                    android:background="#F3EBEB"
-                    android:contentDescription="@string/app_name"
+                <Button
+                    android:id="@+id/btnBook2"
+                    android:layout_width="201dp"
+                    android:layout_height="51dp"
+                    android:layout_marginStart="106dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="104dp"
+                    android:text="BOOK!"
+                    android:textColorLink="@color/teal_700"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-                <EditText
-                    android:id="@+id/editTextTextPersonName5"
-                    android:layout_width="301dp"
-                    android:layout_height="95dp"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="20dp"
-                    android:background="#F3EBEB"
-                    android:ems="10"
-                    android:hint="@string/app_name"
-                    android:inputType="textPersonName"
-                    android:textColorHint="#546E7A"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView14"
+                    app:layout_constraintVertical_bias="0.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
