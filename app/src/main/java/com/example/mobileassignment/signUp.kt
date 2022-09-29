@@ -24,16 +24,9 @@ class signUp : AppCompatActivity() {
             this, R.layout.activity_sign_up)
 
         //database access
-
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("users")
         var btnRegister = binding.btnRegister
-
-
-
-
-
-
           btnRegister.setOnClickListener() {
             val bundle = intent.extras
             val username = binding.signupUsername.text.toString()
