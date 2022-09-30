@@ -30,8 +30,9 @@ class UserBook: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePic
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_user_book)
         firebaseAuth = FirebaseAuth.getInstance()
-        val database = FirebaseDatabase.getInstance()
 
+        val database = FirebaseDatabase.getInstance()
+        val myRefs = database.getReference("appointment")
         //navigation
         binding.btnHome.setOnClickListener(){
             val intent = Intent(this, UserMainActivity::class.java)
@@ -65,33 +66,29 @@ class UserBook: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePic
 
 
 
-        val myRef = database.getReference("bookings")
+
 
 
         //book the appointment
         binding.btnBook2.setOnClickListener(){
             val bundle = intent.extras
 
-            val spinReason = binding.spinReason.selectedItemPosition.toString()
-            val spinVenue = binding.spinVenue.selectedItemPosition.toString()
-            val tvTimePicker = binding.tvTimePicker.text.toString()
+            val reason = binding.spinReason.selectedItemPosition.toString()
+            val venue = binding.spinVenue.selectedItemPosition.toString()
+            val dateAndTime = binding.tvTimePicker.text.toString()
 
 
-
+            val appointment = bookings(reason ,venue, dateAndTime)
+            myRefs.child(appointment.dateAndTime).setValue(appointment).addOnCompleteListener(){
+                Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, UserMainActivity::class.java)
+                startActivity(intent)
+            }
             databases = FirebaseDatabase.getInstance().getReference("bookings")
 
 
 
 
-            if (spinReason.isNotEmpty() || spinVenue.isNotEmpty() || tvTimePicker.isNotEmpty()) {
-                val sharedPreference = getSharedPreferences("email", Context.MODE_PRIVATE)
-                var editor = sharedPreference.edit()
-                editor.putString("email", tvTimePicker)
-                editor.commit()
-
-            } else {
-                Toast.makeText(applicationContext,"Please fill up the details.", Toast.LENGTH_SHORT).show()
-            }
 
 
 
