@@ -1,5 +1,6 @@
 package com.example.mobileassignment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 
@@ -43,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 
 
         btnLogin.setOnClickListener() {
+            val sharedPref = getSharedPreferences("addName",Context.MODE_PRIVATE)
+            var edit = sharedPref.edit()
 
             val email = binding.dataEmail.text.toString()
             val password = binding.dataPassword.text.toString()
@@ -51,8 +54,10 @@ class MainActivity : AppCompatActivity() {
 
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
+
                         val myIntent = Intent(this, UserMainActivity::class.java)
-                        val bundle = Bundle()
+                        edit.putString("email",email)
+                        edit.commit()
                         Toast.makeText(applicationContext, "Welcome to St4yAlive ", Toast.LENGTH_SHORT).show()
                         startActivity(myIntent)
                     } else {
@@ -62,11 +67,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 Toast.makeText(this, "Empty Fields Are not Allowed !!", Toast.LENGTH_SHORT).show()
-
             }
-
-
-
         }
 
 
@@ -75,12 +76,12 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onStart() {
         super.onStart()
-
         if(firebaseAuth.currentUser != null){
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, UserMainActivity::class.java)
             startActivity(intent)
         }
     }
+
         //passdata
         // val bundle = Bundle()
 

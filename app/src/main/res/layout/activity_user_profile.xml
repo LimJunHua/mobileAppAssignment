@@ -7,43 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".UserProfile">
 
-    <ScrollView
-        android:id="@+id/scrollView4"
-        android:layout_width="414dp"
-        android:layout_height="649dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="414dp"
-            android:layout_height="649dp" >
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                tools:layout_editor_absoluteX="85dp"
-                tools:layout_editor_absoluteY="36dp" />
-
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="log out"
-                tools:layout_editor_absoluteX="218dp"
-                tools:layout_editor_absoluteY="36dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="412dp"
         android:layout_height="83dp"
+        android:layout_marginBottom="4dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView4">
+        app:layout_constraintTop_toBottomOf="@+id/scrollView3">
 
         <Button
             android:id="@+id/btnHome"
@@ -75,5 +49,27 @@
             android:text="Profile"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Log Out"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.511" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

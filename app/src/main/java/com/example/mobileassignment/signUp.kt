@@ -28,21 +28,20 @@ class signUp : AppCompatActivity() {
 
         //database access
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("users")
-        var btnRegister = binding.btnRegister
-          btnRegister.setOnClickListener() {
+        val myRefs = database.getReference("users")
+
+          binding.btnRegister.setOnClickListener() {
             val bundle = intent.extras
 
             var name = binding.signupName.text.toString()
-            val email = binding.signupEmail.text.toString()
+            var rawEmail = binding.signupEmail.text.toString()
             val iCNumber = binding.signupICNumber.text.toString()
             val phoneNumber = binding.signupPhoneNumber.text.toString()
             val password = binding.signupPassword.text.toString()
             val comfirmPassword = binding.signupComfirmPassword.text.toString()
 
-              var tvName = binding.tvName
 
-
+              val email= rawEmail.replace('.', ',')
 
               val users = user(name ,iCNumber, phoneNumber, email, password )
               databases = FirebaseDatabase.getInstance().getReference("users")
@@ -57,17 +56,13 @@ class signUp : AppCompatActivity() {
                   Toast.makeText(applicationContext, "Password does not match ", Toast.LENGTH_LONG).show()
               }
               else{
-
-
-                  firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(){
+                  firebaseAuth.createUserWithEmailAndPassword(rawEmail, password).addOnCompleteListener(){
                       if(it.isSuccessful){
-                          myRef.child(users.name).setValue(users)
-
+                          myRefs.child(users.email).setValue(users)
+                          Toast.makeText(applicationContext, "Register Completed ", Toast.LENGTH_SHORT).show()
                           startActivity(myIntent)
-
                      }else {
                           Toast.makeText(applicationContext, "This email has been registered, please try again ", Toast.LENGTH_LONG).show()
-
                       }
 
                   }
@@ -76,12 +71,22 @@ class signUp : AppCompatActivity() {
 
 
               }
+        }
 
-          }
+
+
+
+
 
     }
+    fun  encodeUserEmail (userEmail :String) :String{
+        return userEmail.replace(".", ",");
+    }
+    fun  decodeUserEmail (userEmail :String) :String{
+        return userEmail.replace(",", ".");
+    }
 
-        // writeNewUser(username, name,  email, ICNumber, password)
+    // writeNewUser(username, name,  email, ICNumber, password)
 
 
 

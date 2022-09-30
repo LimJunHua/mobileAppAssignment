@@ -19,15 +19,15 @@ class UserMainActivity : AppCompatActivity(){
 //        val binding: ActivityUserMainBinding = DataBindingUtil.setContentView(
 //            this, R.layout.activity_user_main)
 
-        val btnBook = binding.btnBook
 
 
 
 
         binding.btnBook.setOnClickListener(){
 
-            val myIntent = Intent(this, UserBook::class.java)
-            startActivity(myIntent)
+            val intent = Intent(this, UserBook::class.java)
+
+            startActivity(intent)
         }
 
         binding.btnHome.setOnClickListener(){
@@ -39,6 +39,8 @@ class UserMainActivity : AppCompatActivity(){
 
         binding.btnProfile.setOnClickListener(){
             val intent = Intent(this, UserProfile::class.java)
+
+
             startActivity(intent)
         }
 
