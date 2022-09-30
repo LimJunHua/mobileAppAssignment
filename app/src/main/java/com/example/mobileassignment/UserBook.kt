@@ -12,11 +12,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.example.mobileassignment.databinding.ActivityUserBookBinding
+import com.google.firebase.database.DatabaseReference
 import java.text.SimpleDateFormat
 import java.util.*
 
 class UserBook: AppCompatActivity() {
     private lateinit var binding: ActivityUserBookBinding
+    private lateinit var database: DatabaseReference
     private lateinit var datePicker: DatePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +26,7 @@ class UserBook: AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_user_book)
 
         var cal = Calendar.getInstance()
-
+        //DatePicker
         // get the references from layout file
 
         this.binding.tvDate

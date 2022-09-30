@@ -115,6 +115,8 @@
                     android:layout_height="33dp"
                     android:layout_marginStart="52dp"
                     android:layout_marginTop="20dp"
+                    android:background="#F3EBEB"
+                    android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
