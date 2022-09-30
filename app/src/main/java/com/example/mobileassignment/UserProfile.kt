@@ -12,10 +12,12 @@ import com.example.mobileassignment.databinding.ActivityUserProfileBinding
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class UserProfile : AppCompatActivity() {
     private lateinit var binding : ActivityUserProfileBinding
+    private lateinit var databases : DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +29,19 @@ class UserProfile : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("addName",Context.MODE_PRIVATE)
 
-        val email = sharedPref.getString("email","default value")
-        binding.tvUserEmail.text = email.toString()
+        val userEmail = sharedPref.getString("email","default value")
+        binding.tvUserEmail.text = userEmail.toString()
+
+        val searchEmail = userEmail?.replace('.', ',').toString()
+        databases = FirebaseDatabase.getInstance().getReference("users")
+        databases.child(searchEmail).get().addOnSuccessListener {
+
+            if (it.exists()) {
+                binding.tvUserName.text = it.child("name").value.toString()
+                binding.tvUserICNumber.text = it.child("icnumber").value.toString()
+                binding.tvUserPhonenumber.text = it.child("phoneNumber").value.toString()
+            }
+        }
         binding.btnLogout.setOnClickListener(){
             firebaseAuth.signOut()
             val myIntent = Intent(this, MainActivity::class.java)
