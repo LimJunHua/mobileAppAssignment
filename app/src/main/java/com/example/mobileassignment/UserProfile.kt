@@ -50,7 +50,7 @@ class UserProfile : AppCompatActivity() {
         }
 
         binding.btnBooking.setOnClickListener(){
-            val intent = Intent(this, UserBook::class.java)
+            val intent = Intent(this, AboutUs::class.java)
             startActivity(intent)
         }
         binding.btnHome.setOnClickListener(){
