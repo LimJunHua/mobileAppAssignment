@@ -83,9 +83,14 @@ class UserBook: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePic
 
             val appointment = bookings(reason ,venue, dateAndTime)
             myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener(){
-                Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, UserMainActivity::class.java)
-                startActivity(intent)
+                if(it.isSuccessful) {
+                    Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, UserMainActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(applicationContext, "Already have a Booking", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, UserMainActivity::class.java)
+                }
             }
             databases = FirebaseDatabase.getInstance().getReference("bookings")
 
