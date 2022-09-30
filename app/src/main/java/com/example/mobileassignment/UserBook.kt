@@ -76,8 +76,8 @@ class UserBook: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePic
         binding.btnBook2.setOnClickListener(){
             val bundle = intent.extras
 
-            val reason = binding.spinReason.selectedItemPosition.toString()
-            val venue = binding.spinVenue.selectedItemPosition.toString()
+            val reason = binding.spinReason.selectedItem.toString()
+            val venue = binding.spinVenue.selectedItem.toString()
             val dateAndTime = binding.tvTimePicker.text.toString()
 
 
