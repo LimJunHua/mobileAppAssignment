@@ -41,7 +41,10 @@ class UserBook: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePic
 
         //get date and time
         pickDate()
+        val sharedPref = getSharedPreferences("addName",Context.MODE_PRIVATE)
 
+        val userEmail = sharedPref.getString("email","default value")
+        val searchEmail = userEmail?.replace('.', ',').toString()
         var cal = Calendar.getInstance()
 
 
@@ -79,7 +82,7 @@ class UserBook: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePic
 
 
             val appointment = bookings(reason ,venue, dateAndTime)
-            myRefs.child(appointment.dateAndTime).setValue(appointment).addOnCompleteListener(){
+            myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener(){
                 Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, UserMainActivity::class.java)
                 startActivity(intent)

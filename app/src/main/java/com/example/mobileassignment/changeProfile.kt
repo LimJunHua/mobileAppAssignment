@@ -48,11 +48,11 @@ class changeProfile : AppCompatActivity() {
                     val name = binding.tvChangeName.text.toString()
                     val iCNumber = binding.tvChangeICNumber.text.toString()
                     val phoneNumber = binding.tvChangePhoneNumber.text.toString()
-                    var password = it.child("password").value.toString()
+
                     if (email.isEmpty() ||name.isEmpty()||iCNumber.isEmpty()||phoneNumber.isEmpty()){
                         Toast.makeText(applicationContext, "cannot leave any field blank ", Toast.LENGTH_SHORT).show()
                     }else{
-                        val users = user(name ,iCNumber, phoneNumber, email , password  )
+                        val users = user(name ,iCNumber, phoneNumber, email  )
                         myRefs.child(users.email).setValue(users)
 
                         val myIntent = Intent(this, UserProfile::class.java)

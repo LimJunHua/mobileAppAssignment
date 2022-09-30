@@ -46,7 +46,7 @@ class signUp : AppCompatActivity() {
 
               val email= rawEmail.replace('.', ',')
 
-              val users = user(name ,iCNumber, phoneNumber, email ,password)
+              val users = user(name ,iCNumber, phoneNumber, email )
               databases = FirebaseDatabase.getInstance().getReference("users")
 
               val myIntent = Intent(this, MainActivity::class.java)

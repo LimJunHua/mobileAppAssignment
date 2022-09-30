@@ -30,9 +30,10 @@ class UserProfile : AppCompatActivity() {
         val sharedPref = getSharedPreferences("addName",Context.MODE_PRIVATE)
 
         val userEmail = sharedPref.getString("email","default value")
-        binding.tvUserEmail.text = userEmail.toString()
+
 
         val searchEmail = userEmail?.replace('.', ',').toString()
+        binding.tvUserEmail.text = userEmail.toString()
         databases = FirebaseDatabase.getInstance().getReference("users")
         databases.child(searchEmail).get().addOnSuccessListener {
 
