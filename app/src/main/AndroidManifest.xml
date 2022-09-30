@@ -17,6 +17,14 @@
         android:theme="@style/Theme.MobileAssignment"
         tools:targetApi="31">
         <activity
+            android:name=".UserProfile"
+            android:exported="true"
+            android:label="HealthCare">
+            <intent-filter>
+                <action android:name="com.example.mobileassignment.UserProfile" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".pendingVerification"
             android:exported="true"
             android:label="@string/app_name">
@@ -30,6 +38,14 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.example.mobileassignment.UserMainActivity" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".UserBook"
+            android:exported="true"
+            android:label="Booking">
+            <intent-filter>
+                <action android:name="com.example.mobileassignment.UserBook" />
             </intent-filter>
         </activity>
         <activity

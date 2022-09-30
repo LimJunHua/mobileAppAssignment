@@ -1,22 +1,27 @@
 package com.example.mobileassignment
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import com.example.mobileassignment.databinding.ActivityUserProfileBinding
+
+class UserProfile : AppCompatActivity() {
+    private lateinit var binding: ActivityUserProfileBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_user_profile)
+
+        binding.btnHome.setOnClickListener(){
+            val intent = Intent(this, UserMainActivity::class.java)
+            startActivity(intent)
+        }
 
 
-class UserProfile : Fragment() {
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false)
+        binding.btnProfile.setOnClickListener(){
+            val intent = Intent(this, UserProfile::class.java)
+            startActivity(intent)
+        }
     }
-
-
 }

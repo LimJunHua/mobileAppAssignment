@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:foregroundTint="#FDD8D8"
-    tools:context=".UserBooking">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#EFD1CE"
+            android:id="@+id/scrollView3"
+            android:layout_width="414dp"
+            android:layout_height="593dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -55,6 +53,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
                     android:background="#F3EBEB"
+                    android:contentDescription="choose a reason"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.412"
                     app:layout_constraintStart_toStartOf="parent"
@@ -78,14 +77,14 @@
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="27dp"
+                    android:layout_marginStart="52dp"
+                    android:layout_marginTop="22dp"
                     android:fontFamily="monospace"
                     android:text="@string/choose_a_date_time"
                     android:textColor="#795548"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spinVenue" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvClinicAddress" />
 
                 <Spinner
                     android:id="@+id/spinVenue"
@@ -106,17 +105,79 @@
                     android:layout_width="201dp"
                     android:layout_height="51dp"
                     android:layout_marginStart="106dp"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="63dp"
                     android:layout_marginEnd="104dp"
                     android:text="BOOK!"
                     android:textColorLink="@color/teal_700"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/btnDatePick" />
 
+                <TextView
+                    android:id="@+id/tvClinicAddress"
+                    android:layout_width="299dp"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="52dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinVenue" />
+
+
+                <Button
+                    android:id="@+id/btnDatePick"
+                    style="?android:spinnerStyle"
+                    android:layout_width="303dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="159dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="164dp"
+                    android:onClick="openDatePicker"
+                    android:text="Button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <LinearLayout
+            android:layout_width="412dp"
+            android:layout_height="83dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView3">
+
+            <Button
+                android:id="@+id/btnHome"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Home"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btnBooking"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Booking"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btnProfile"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Profile"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+
+</layout>
