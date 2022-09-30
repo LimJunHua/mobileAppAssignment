@@ -1,5 +1,6 @@
 package com.example.mobileassignment
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -19,6 +20,7 @@ class signUp : AppCompatActivity() {
     private lateinit var databases : DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         firebaseAuth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
@@ -44,7 +46,7 @@ class signUp : AppCompatActivity() {
 
               val email= rawEmail.replace('.', ',')
 
-              val users = user(name ,iCNumber, phoneNumber, email, password )
+              val users = user(name ,iCNumber, phoneNumber, email ,password)
               databases = FirebaseDatabase.getInstance().getReference("users")
 
               val myIntent = Intent(this, MainActivity::class.java)
@@ -78,7 +80,10 @@ class signUp : AppCompatActivity() {
               }
         }
 
-
+        binding.btnReturn.setOnClickListener(){
+            val myIntent = Intent(this,MainActivity::class.java)
+            startActivity(myIntent)
+        }
 
 
 

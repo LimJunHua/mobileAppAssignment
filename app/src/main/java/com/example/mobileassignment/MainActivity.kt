@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             this, R.layout.activity_main
         )
         val signup = binding.tvRegister
-        val forgetPasswords = binding.tvForgetPassword
+
         val btnLogin = binding.btnLogin
 
         firebaseAuth = FirebaseAuth.getInstance()
@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity() {
         //forward
         signup.setOnClickListener {
             val myIntent = Intent(this, signUp::class.java)
-            startActivity(myIntent)
-        }
-        forgetPasswords.setOnClickListener {
-            val myIntent = Intent(this, UserBook::class.java)
             startActivity(myIntent)
         }
 
