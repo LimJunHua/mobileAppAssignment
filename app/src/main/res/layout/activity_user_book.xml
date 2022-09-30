@@ -100,19 +100,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView9"
                     tools:ignore="SpeakableTextPresentCheck" />
 
-                <Button
-                    android:id="@+id/btnBook2"
-                    android:layout_width="201dp"
-                    android:layout_height="51dp"
-                    android:layout_marginStart="106dp"
-                    android:layout_marginTop="63dp"
-                    android:layout_marginEnd="104dp"
-                    android:text="BOOK!"
-                    android:textColorLink="@color/teal_700"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnDatePick" />
-
                 <TextView
                     android:id="@+id/tvClinicAddress"
                     android:layout_width="299dp"
@@ -122,24 +109,44 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spinVenue" />
 
-
-                <Button
-                    android:id="@+id/btnDatePick"
-                    style="?android:spinnerStyle"
-                    android:layout_width="303dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="159dp"
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="159dp"
+                    android:layout_height="33dp"
+                    android:layout_marginStart="52dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="164dp"
-                    android:onClick="openDatePicker"
-                    android:text="Button"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+                <Button
+                    android:id="@+id/btnDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="56dp"
+                    android:text="Pick a Date"
+                    app:layout_constraintStart_toEndOf="@+id/tvDate"
+                    app:layout_constraintTop_toBottomOf="@+id/tvClinicAddress" />
+
+                <Button
+                    android:id="@+id/btnBook2"
+                    android:layout_width="201dp"
+                    android:layout_height="51dp"
+                    android:layout_marginStart="107dp"
+                    android:layout_marginTop="44dp"
+                    android:layout_marginEnd="106dp"
+                    android:text="BOOK!"
+                    android:textColorLink="@color/teal_700"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnDate" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="412dp"
             android:layout_height="83dp"
             android:orientation="horizontal"
