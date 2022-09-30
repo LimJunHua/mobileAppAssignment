@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.view.View
 import android.widget.*
 import com.example.mobileassignment.databinding.ActivityUserBookBinding
@@ -66,6 +67,7 @@ class UserBook: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePic
 
         val myRef = database.getReference("bookings")
 
+
         //book the appointment
         binding.btnBook2.setOnClickListener(){
             val bundle = intent.extras
@@ -77,13 +79,15 @@ class UserBook: AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePic
 
 
             databases = FirebaseDatabase.getInstance().getReference("bookings")
-            databases.child(spinReason).get().addOnSuccessListener {
 
-            }
 
 
 
             if (spinReason.isNotEmpty() || spinVenue.isNotEmpty() || tvTimePicker.isNotEmpty()) {
+                val sharedPreference = getSharedPreferences("email", Context.MODE_PRIVATE)
+                var editor = sharedPreference.edit()
+                editor.putString("email", tvTimePicker)
+                editor.commit()
 
             } else {
                 Toast.makeText(applicationContext,"Please fill up the details.", Toast.LENGTH_SHORT).show()
