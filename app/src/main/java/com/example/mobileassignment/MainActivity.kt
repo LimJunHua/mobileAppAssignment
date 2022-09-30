@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.mobileassignment.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -14,6 +15,8 @@ import com.google.firebase.database.FirebaseDatabase
 class MainActivity : AppCompatActivity() {
     private lateinit var databases: DatabaseReference
     private lateinit var binding: ActivityMainBinding
+    private lateinit var firebaseAuth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,48 +27,60 @@ class MainActivity : AppCompatActivity() {
         )
         val signup = binding.tvRegister
         val forgetPasswords = binding.tvForgetPassword
+        val btnLogin = binding.btnLogin
+
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        //forward
         signup.setOnClickListener {
             val myIntent = Intent(this, signUp::class.java)
             startActivity(myIntent)
         }
         forgetPasswords.setOnClickListener {
-            val myIntent = Intent(this, forgetPassword::class.java)
+            val myIntent = Intent(this, UserBook::class.java)
             startActivity(myIntent)
         }
-        val btnLogin = binding.btnLogin
+
 
         btnLogin.setOnClickListener() {
-            var username = binding.dataUsername.text.toString()
+
+            val email = binding.dataEmail.text.toString()
             val password = binding.dataPassword.text.toString()
-            val tvUsername = binding.tvUsername
-            val tvPassword = binding.tvPassword
-            if(username.isEmpty() || password.isEmpty()){
 
-                Toast.makeText(applicationContext, "please fill in all the field", Toast.LENGTH_LONG).show()
-            }
+            if(email.isNotEmpty() && password.isNotEmpty()){
 
-            databases = FirebaseDatabase.getInstance().getReference("users")
-            databases.child(username).get().addOnSuccessListener {
-                if (it.exists()) {
-                    var validPassword = it.child("password").value.toString()
-                    if(password.equals(validPassword)){
-
+                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if (it.isSuccessful) {
                         val myIntent = Intent(this, UserMainActivity::class.java)
-                        Toast.makeText(applicationContext, "Welcome to HealthCare sdn bhd", Toast.LENGTH_LONG).show()
-
+                        val bundle = Bundle()
+                        Toast.makeText(applicationContext, "Welcome to St4yAlive ", Toast.LENGTH_SHORT).show()
                         startActivity(myIntent)
-                    }else{
-                        Toast.makeText(applicationContext, "password wrong", Toast.LENGTH_LONG).show()
-                    }
-                }else{
-                    Toast.makeText(applicationContext, "username not exist", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
 
+                    }
                 }
+            } else {
+                Toast.makeText(this, "Empty Fields Are not Allowed !!", Toast.LENGTH_SHORT).show()
+
             }
+
 
 
         }
 
+
+
+
+    }
+    override fun onStart() {
+        super.onStart()
+
+        if(firebaseAuth.currentUser != null){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
         //passdata
         // val bundle = Bundle()
 
@@ -73,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         // bundle.putString("password", password.text.toString())
         //myIntent.putExtras(bundle)
 
-    }
+
 }
 
 

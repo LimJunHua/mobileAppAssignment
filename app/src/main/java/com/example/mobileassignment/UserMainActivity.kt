@@ -26,8 +26,8 @@ class UserMainActivity : AppCompatActivity(){
 
         binding.btnBook.setOnClickListener(){
 
-            val intent = Intent(this, UserBook::class.java)
-            startActivity(intent)
+            val myIntent = Intent(this, UserBook::class.java)
+            startActivity(myIntent)
         }
 
         binding.btnHome.setOnClickListener(){
