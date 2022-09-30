@@ -58,8 +58,14 @@ class UserProfile : AppCompatActivity() {
         }
         binding.btnProfile.setOnClickListener(){
             val intent = Intent(this, UserProfile::class.java)
-
-
+            startActivity(intent)
+        }
+        binding.btnChangeProfile.setOnClickListener(){
+            val intent = Intent(this, changeProfile::class.java)
+            startActivity(intent)
+        }
+        binding.btnChangePassword.setOnClickListener(){
+            val intent = Intent(this, changePassword::class.java)
             startActivity(intent)
         }
     }

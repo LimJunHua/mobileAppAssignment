@@ -1,6 +1,7 @@
 package com.example.mobileassignment
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -58,6 +59,10 @@ class signUp : AppCompatActivity() {
               else{
                   firebaseAuth.createUserWithEmailAndPassword(rawEmail, password).addOnCompleteListener(){
                       if(it.isSuccessful){
+                          val sharedPref = getSharedPreferences("addName", Context.MODE_PRIVATE)
+                          var edit = sharedPref.edit()
+                          edit.putString("email",email)
+                          edit.commit()
                           myRefs.child(users.email).setValue(users)
                           Toast.makeText(applicationContext, "Register Completed ", Toast.LENGTH_SHORT).show()
                           startActivity(myIntent)
