@@ -47,7 +47,7 @@
 
                 <Spinner
                     android:id="@+id/spinReason"
-                    android:layout_width="303dp"
+                    android:layout_width="314dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="27dp"
                     android:layout_marginTop="20dp"
@@ -58,7 +58,7 @@
                     app:layout_constraintHorizontal_bias="0.412"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView8"
-                    tools:ignore="DuplicateSpeakableTextCheck,SpeakableTextPresentCheck" />
+                    tools:ignore="DuplicateSpeakableTextCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 <TextView
                     android:id="@+id/textView9"
@@ -78,17 +78,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="52dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="monospace"
                     android:text="Choose a Date and Time"
                     android:textColor="#795548"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvClinicAddress" />
+                    app:layout_constraintTop_toBottomOf="@+id/spinVenue" />
 
                 <Spinner
                     android:id="@+id/spinVenue"
-                    android:layout_width="302dp"
+                    android:layout_width="314dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="52dp"
                     android:layout_marginTop="20dp"
@@ -100,48 +100,60 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView9"
                     tools:ignore="SpeakableTextPresentCheck" />
 
-                <TextView
-                    android:id="@+id/tvClinicAddress"
-                    android:layout_width="302dp"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="5dp"
-                    app:layout_constraintEnd_toEndOf="@+id/spinVenue"
-                    app:layout_constraintStart_toStartOf="@+id/spinVenue"
-                    app:layout_constraintTop_toBottomOf="@+id/spinVenue" />
-
                 <Button
                     android:id="@+id/btnBook2"
                     android:layout_width="201dp"
                     android:layout_height="51dp"
                     android:layout_marginStart="107dp"
-                    android:layout_marginTop="41dp"
+                    android:layout_marginTop="40dp"
                     android:layout_marginEnd="106dp"
                     android:text="BOOK!"
                     android:textColorLink="@color/teal_700"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnTimePicker" />
+                    app:layout_constraintTop_toBottomOf="@+id/spinTime" />
+
+                <Spinner
+                    android:id="@+id/spinTime"
+                    android:layout_width="203dp"
+                    android:layout_height="43dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintEnd_toEndOf="@+id/tvTimePicker"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/tvTimePicker"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTimePicker"
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
                     android:id="@+id/tvTimePicker"
-                    android:layout_width="175dp"
-                    android:layout_height="39dp"
+                    android:layout_width="203dp"
+                    android:layout_height="36dp"
                     android:layout_marginStart="52dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:background="#F3EBEB"
-                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
                 <Button
                     android:id="@+id/btnTimePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:text="select"
+                    android:layout_width="95dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="28dp"
+                    android:text="Select"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTimePicker"
                     app:layout_constraintStart_toEndOf="@+id/tvTimePicker"
-                    app:layout_constraintTop_toTopOf="@+id/tvTimePicker" />
+                    app:layout_constraintTop_toTopOf="@+id/tvTimePicker"
+                    app:layout_constraintVertical_bias="0.187" />
+
+                <TextView
+                    android:id="@+id/tvBookingName"
+                    android:layout_width="202dp"
+                    android:layout_height="29dp"
+                    android:layout_marginStart="69dp"
+                    android:layout_marginTop="9dp"
+                    android:text="TextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

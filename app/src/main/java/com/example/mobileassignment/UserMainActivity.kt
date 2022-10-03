@@ -8,33 +8,41 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileassignment.databinding.ActivityUserMainBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class UserMainActivity : AppCompatActivity(){
     private lateinit var binding:ActivityUserMainBinding
     private lateinit var databases: DatabaseReference
+    private lateinit var bookingRecycler: RecyclerView
+    private lateinit var bookingArrayList: ArrayList<bookings>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_main)
+//        binding.recyclerBooking.adapter()
 
-
+        //open a variable
         val sharedPref = getSharedPreferences("addName",Context.MODE_PRIVATE)
 
+        //use "email" as primary key to access the data
         val userEmail = sharedPref.getString("email","default value")
+
+        //replace "." with "," because FIrebase cannot allow "."
         val searchEmail = userEmail?.replace('.', ',').toString()
         databases = FirebaseDatabase.getInstance().getReference("appointment")
         databases.child(searchEmail).get().addOnSuccessListener {
 
             if (it.exists()) {
-                binding.tvReason.text = it.child("reason").value.toString()
-                binding.tvVenue.text = it.child("venue").value.toString()
-                binding.tvDateTime.text = it.child("dateAndTime").value.toString()
+
+                binding.tvViewName.text = it.child("name").value.toString()
+                binding.tvViewVenue.text = it.child("venue").value.toString()
+                binding.tvViewDate.text = it.child("dateAndTime").value.toString()
+                binding.tvViewTime.text = it.child("time").value.toString()
             }
         }
-
 
         binding.btnBook.setOnClickListener(){
 
@@ -66,6 +74,8 @@ class UserMainActivity : AppCompatActivity(){
 
 
     }
+
+
 
 
 }
