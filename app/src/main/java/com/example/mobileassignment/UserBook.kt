@@ -36,7 +36,6 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         val database = FirebaseDatabase.getInstance()
         val myRefs = database.getReference("appointment")
-        val myRef = database.getReference("users")
         //navigation
         binding.btnHome.setOnClickListener() {
             val intent = Intent(this, UserMainActivity::class.java)
@@ -62,7 +61,6 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         //Admin (doctor) -> can view activity log (see the doctor actions -> )
 
         //get reason and venue
-
         databases = FirebaseDatabase.getInstance().getReference("users")
         databases.child(searchEmail).get().addOnSuccessListener {
 
@@ -80,12 +78,23 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         val venue = arrayOf("Klinik We-Care", "Klinik Vitality", "Klinik Utama")
         val adapt = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, venue)
         binding.spinVenue.adapter = adapt
+
         val spinVenue = binding.spinVenue
 
-        val time = arrayOf("8am - 9am", "9am - 10am","10am - 11am","11am - 12pm","1pm - 2pm","2pm - 3pm","3pm - 4pm","4pm - 5pm")
+        val time = arrayOf("8am - 9am","9am - 10am","10am - 11am","11am - 12pm","1pm - 2pm","2pm - 3pm","3pm - 4pm","4pm - 5pm")
         val adapterrr = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, time)
         binding.spinTime.adapter = adapterrr
-        val spinTime = binding.spinTime
+        binding.spinTime.onItemSelectedListener= object :
+            AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
 
 //        when (venue){
 //            arrayOf("Klinik We-Care") -> binding.tvClinicAddress.text = String.format("4, Jalan 5/4c, Taman Desa Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur")
@@ -105,17 +114,18 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
             val appointment = bookings(name,reason, venue, dateAndTime, time)
 
-            myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener() {
-                if (it.isSuccessful) {
-                    Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, UserMainActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(applicationContext, "Already have a Booking", Toast.LENGTH_SHORT)
-                        .show()
-                    val intent = Intent(this, UserMainActivity::class.java)
+                myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener() {
+
+                    if (it.isSuccessful) {
+                        Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, UserMainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "Already have a Booking", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, UserMainActivity::class.java)
+                    }
                 }
-            }
+
             databases = FirebaseDatabase.getInstance().getReference("bookings")
 
 
