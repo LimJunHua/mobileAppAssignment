@@ -1,23 +1,17 @@
 package com.example.mobileassignment
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.view.View
 import android.widget.*
 import com.example.mobileassignment.databinding.ActivityUserBookBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
-import java.text.SimpleDateFormat
 import java.util.*
 
 class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
@@ -27,7 +21,9 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var datePicker: DatePicker
     val cal: Calendar = Calendar.getInstance()
+    val database = FirebaseDatabase.getInstance()
     val selectedcal: Calendar = Calendar.getInstance()
+    val datePath = database.getReference("Booked")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +51,7 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         //limit one day booking to 10 times only
         //limit appointment time from 8 am - 5 pm -> done
         //day only limited from mon to fri -> done
-        //cancel booking
-
-        //Admin (doctor) -> can view the booked timeslot and call/accept the booking?
-        //Admin (doctor) -> can view activity log (see the doctor actions -> )
+        //cancel booking -> done
 
         //get reason and venue
         databases = FirebaseDatabase.getInstance().getReference("users")
@@ -68,6 +61,7 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 binding.tvBookingName.text = it.child("name").value.toString()
             }
         }
+
 
 
         val reason = arrayOf("Medical Checkup", "Feeling Unwell")
@@ -81,27 +75,6 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
         val spinVenue = binding.spinVenue
 
-        val time = arrayOf("8am - 9am","9am - 10am","10am - 11am","11am - 12pm","1pm - 2pm","2pm - 3pm","3pm - 4pm","4pm - 5pm")
-        val adapterrr = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, time)
-        binding.spinTime.adapter = adapterrr
-        binding.spinTime.onItemSelectedListener= object :
-            AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-        }
-
-//        when (venue){
-//            arrayOf("Klinik We-Care") -> binding.tvClinicAddress.text = String.format("4, Jalan 5/4c, Taman Desa Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur")
-//            arrayOf("Klinik Vitality") -> binding.tvClinicAddress.text = String.format("No 17-G, Plaza, Jalan Maju Ria 2, Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur")
-//            arrayOf("Klinik Utama") -> binding.tvClinicAddress.text = String.format("144, Jln Kepong, Pekan Kepong, 52100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur")
-//        }
-
         //book the appointment
         binding.btnBook2.setOnClickListener() {
             val bundle = intent.extras
@@ -111,45 +84,93 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             val venue = binding.spinVenue.selectedItem.toString()
             val dateAndTime = binding.tvTimePicker.text.toString()
             val time = binding.spinTime.selectedItem.toString()
+            var dbselectedtime = ""
 
-            val appointment = bookings(name,reason, venue, dateAndTime, time)
+//            val booleanTime = findAvailableTimeSlot(dateAndTime, time)
+//            if (booleanTime) {
+                val appointment = bookings(name, reason, venue, dateAndTime, time)
+//                myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener() {
+//
+//                    if (it.isSuccessful) {
+//                        Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
+//                        val intent = Intent(this, UserMainActivity::class.java)
+//                        startActivity(intent)
+//                    } else {
+//                        Toast.makeText(applicationContext, "Already have a Booking", Toast.LENGTH_SHORT).show()
+//                        val intent = Intent(this, UserMainActivity::class.java)
+//                    }
+//                }
+            myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener() {
 
-                myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener() {
+                if (it.isSuccessful) {
+                    datePath.get().addOnSuccessListener {
+                        if (it.exists()) {
+                            if (it.child(dateAndTime).exists()) {
+                                dbselectedtime = it.child(dateAndTime).value.toString()
+                                val selectedTime = "$dbselectedtime.$time"
+                                datePath.child(dateAndTime).setValue(selectedTime).addOnCompleteListener() {
 
-                    if (it.isSuccessful) {
-                        Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
+                                }.addOnFailureListener{
+                                    Toast.makeText(applicationContext, it.message.toString(), Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                datePath.child(dateAndTime).setValue(time).addOnCompleteListener() {
+
+                                }.addOnFailureListener{
+                                    Toast.makeText(applicationContext, it.message.toString(), Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        } else {
+                            datePath.child(dateAndTime).setValue(time).addOnCompleteListener() {
+
+                            }.addOnFailureListener{
+                                Toast.makeText(applicationContext, it.message.toString(), Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }.addOnFailureListener{
+                        Toast.makeText(applicationContext, it.message.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                        Toast.makeText(applicationContext, "Booking Success!", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, UserMainActivity::class.java)
                         startActivity(intent)
-                    } else {
-                        Toast.makeText(applicationContext, "Already have a Booking", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, UserMainActivity::class.java)
-                    }
+                } else {
+                    Toast.makeText(applicationContext, "Already have a Booking", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, UserMainActivity::class.java)
                 }
-
-            databases = FirebaseDatabase.getInstance().getReference("bookings")
+            }
 
 
         }
 
     }
 
+    private fun findAvailableTimeSlot(dateAndTime: String, time: String):Boolean {
+        val database = FirebaseDatabase.getInstance()
+        val myRefs = database.getReference("Booked")
+        var bookedTime = ""
+        var availableList = arrayListOf<String>()
+        myRefs.child(dateAndTime).get()
+            .addOnSuccessListener { result ->
+                if (result != null) {
+                    bookedTime=result.value.toString()
 
-//    private fun save(){
-//        val spinReason = binding.spinReason.selectedItemPosition.toString()
-//        val spinVenue = binding.spinVenue.selectedItemPosition.toString()
-//        val tvDate = binding.tvDate.text.toString()
-//
-//
-//        val database = FirebaseDatabase.getInstance()
-//        val myRef = database.getReference("bookingAppointment")
-//        myRef.child("booking").get().addOnSuccessListener {
-//            Toast.makeText(applicationContext, "Booking is successful!", Toast.LENGTH_LONG).show()
-//        }
-//            .addOnFailureListener {
-//                Toast.makeText(applicationContext, "Booking is failed", Toast.LENGTH_LONG).show()
-//            }
-//
-//    }
+                }
+            }.addOnFailureListener {
+                Toast.makeText(applicationContext, "Failed to read.", Toast.LENGTH_LONG).show()
+            }
+        if(bookedTime.isNotEmpty()){
+            val bookedArray = bookedTime.split(".").toTypedArray()
+            for (retrieveTime in bookedArray){
+                if(retrieveTime.contains(time)) {
+
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+
 
 
     //TimePicker
@@ -209,6 +230,45 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                     selectedcal.set(savedyear, savedmonth, savedday)
                     if (selectedcal.get(Calendar.DAY_OF_WEEK) != 1 && selectedcal.get(Calendar.DAY_OF_WEEK) != 7) {
                         binding.tvTimePicker.text = "$savedday-$displaymonth-$savedyear"
+                        var selectedtimearray: List<String>
+                        var dbselectedtime = ""
+
+                        var select = ArrayList<String>()
+                        select.add("8am - 9am")
+                        select.add("9am - 10am")
+                        select.add("10am - 11am")
+                        select.add("11am - 12pm")
+                        select.add("1pm - 2pm")
+                        select.add("2pm - 3pm")
+                        select.add("3pm - 4pm")
+                        select.add("4pm - 5pm")
+
+                        datePath.get().addOnSuccessListener {
+                            if (it.exists()) {
+                                if (it.child("$savedday-$displaymonth-$savedyear").exists()) {
+                                    dbselectedtime = it.child("$savedday-$displaymonth-$savedyear").value.toString()
+                                    selectedtimearray = dbselectedtime.split("\\.".toRegex())
+                                    for (item in selectedtimearray) {
+                                        select.remove(item)
+                                    }
+
+                                    var adapterrr = ArrayAdapter(this, android.R.layout.simple_list_item_1, select)
+                                    binding.spinTime.adapter = adapterrr
+                                    binding.spinTime.setSelection(0)
+                                }else {
+                                    var adapterrr = ArrayAdapter(this, android.R.layout.simple_list_item_1, select)
+                                    binding.spinTime.adapter = adapterrr
+                                    binding.spinTime.setSelection(0)
+                                }
+                            }
+                            else {
+                                var adapterrr = ArrayAdapter(this, android.R.layout.simple_list_item_1, select)
+                                binding.spinTime.adapter = adapterrr
+                                binding.spinTime.setSelection(0)
+                            }
+                        }.addOnFailureListener{
+                            Toast.makeText(applicationContext, it.message.toString(), Toast.LENGTH_SHORT).show()
+                        }
                     } else {
                         Toast.makeText(applicationContext, "You can only select Monday to Friday.", Toast.LENGTH_SHORT)
                             .show()
