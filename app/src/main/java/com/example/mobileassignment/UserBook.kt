@@ -48,7 +48,7 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         var cal = Calendar.getInstance()
 
         //UserBooking improvements
-        //limit one day booking to 10 times only
+        //limit one day booking to 8 times only -> done
         //limit appointment time from 8 am - 5 pm -> done
         //day only limited from mon to fri -> done
         //cancel booking -> done
@@ -62,8 +62,7 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             }
         }
 
-
-
+        //spinners
         val reason = arrayOf("Medical Checkup", "Feeling Unwell")
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, reason)
         binding.spinReason.adapter = adapter
@@ -86,22 +85,8 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             val time = binding.spinTime.selectedItem.toString()
             var dbselectedtime = ""
 
-//            val booleanTime = findAvailableTimeSlot(dateAndTime, time)
-//            if (booleanTime) {
                 val appointment = bookings(name, reason, venue, dateAndTime, time)
-//                myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener() {
-//
-//                    if (it.isSuccessful) {
-//                        Toast.makeText(applicationContext, "Booking Success", Toast.LENGTH_SHORT).show()
-//                        val intent = Intent(this, UserMainActivity::class.java)
-//                        startActivity(intent)
-//                    } else {
-//                        Toast.makeText(applicationContext, "Already have a Booking", Toast.LENGTH_SHORT).show()
-//                        val intent = Intent(this, UserMainActivity::class.java)
-//                    }
-//                }
             myRefs.child(searchEmail).setValue(appointment).addOnCompleteListener() {
-
                 if (it.isSuccessful) {
                     datePath.get().addOnSuccessListener {
                         if (it.exists()) {
@@ -144,31 +129,6 @@ class UserBook : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     }
 
-    private fun findAvailableTimeSlot(dateAndTime: String, time: String):Boolean {
-        val database = FirebaseDatabase.getInstance()
-        val myRefs = database.getReference("Booked")
-        var bookedTime = ""
-        var availableList = arrayListOf<String>()
-        myRefs.child(dateAndTime).get()
-            .addOnSuccessListener { result ->
-                if (result != null) {
-                    bookedTime=result.value.toString()
-
-                }
-            }.addOnFailureListener {
-                Toast.makeText(applicationContext, "Failed to read.", Toast.LENGTH_LONG).show()
-            }
-        if(bookedTime.isNotEmpty()){
-            val bookedArray = bookedTime.split(".").toTypedArray()
-            for (retrieveTime in bookedArray){
-                if(retrieveTime.contains(time)) {
-
-                    return false
-                }
-            }
-        }
-        return true
-    }
 
 
 
