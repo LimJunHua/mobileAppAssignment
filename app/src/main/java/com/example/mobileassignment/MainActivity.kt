@@ -3,14 +3,12 @@ package com.example.mobileassignment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.mobileassignment.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             val myIntent = Intent(this, signUp::class.java)
             startActivity(myIntent)
         }
-
+        onBackPressed()
 
         btnLogin.setOnClickListener() {
             val sharedPref = getSharedPreferences("addName",Context.MODE_PRIVATE)
@@ -51,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
 
-                        val myIntent = Intent(this, UserMainActivity::class.java)
+                        val myIntent = Intent(this, UserMainPost::class.java)
                         edit.putString("email",email)
                         edit.commit()
                         Toast.makeText(applicationContext, "Welcome to St4yAlive ", Toast.LENGTH_SHORT).show()
@@ -73,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if(firebaseAuth.currentUser != null){
-            val intent = Intent(this, UserMainActivity::class.java)
+            val intent = Intent(this, UserMainPost::class.java)
             startActivity(intent)
         }
     }
@@ -84,7 +82,8 @@ class MainActivity : AppCompatActivity() {
         //bundle.putString("username", username.text.toString())
         // bundle.putString("password", password.text.toString())
         //myIntent.putExtras(bundle)
-
+        override fun onBackPressed() {
+        }
 
 }
 

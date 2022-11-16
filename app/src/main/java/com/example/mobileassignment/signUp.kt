@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -47,9 +48,9 @@ class signUp : AppCompatActivity() {
               val email= rawEmail.replace('.', ',')
 
               val users = user(name ,iCNumber, phoneNumber, email )
-              databases = FirebaseDatabase.getInstance().getReference("users")
 
-              val myIntent = Intent(this, MainActivity::class.java)
+
+              val myIntent = Intent(this, verificationRegister::class.java)
 
               if( name.isEmpty()|| email.isEmpty()|| iCNumber.isEmpty() || phoneNumber.isEmpty() || password.isEmpty() || comfirmPassword.isEmpty() ){
                   Toast.makeText(applicationContext, "please fill in all the field", Toast.LENGTH_LONG).show()
@@ -62,9 +63,24 @@ class signUp : AppCompatActivity() {
                   firebaseAuth.createUserWithEmailAndPassword(rawEmail, password).addOnCompleteListener(){
                       if(it.isSuccessful){
                           val sharedPref = getSharedPreferences("addName", Context.MODE_PRIVATE)
+                          var verificationCode = (10000..99999).random()
                           var edit = sharedPref.edit()
                           edit.putString("email",email)
+                          edit.putString("name",name)
+                          edit.putString("phoneNumber",phoneNumber)
+                          edit.putString("iCNumber",iCNumber)
+                          edit.putString("password",password)
+                          edit.putInt("verificationCode",verificationCode)
                           edit.commit()
+                          var sendEmail = Intent(Intent.ACTION_SEND)
+                          sendEmail.data = Uri.parse("Mail to:")
+                          sendEmail.type = "text/plain"
+                          sendEmail.putExtra(Intent.EXTRA_EMAIL,rawEmail)
+                          sendEmail.putExtra(Intent.EXTRA_SUBJECT,"Verification Code")
+                          sendEmail.putExtra(Intent.EXTRA_TEXT,rawEmail)
+
+
+
                           myRefs.child(users.email).setValue(users)
                           Toast.makeText(applicationContext, "Register Completed ", Toast.LENGTH_SHORT).show()
                           startActivity(myIntent)
